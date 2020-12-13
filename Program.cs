@@ -13,7 +13,7 @@ namespace password_manager
 
             var context = new DataContext();
 
-           //addNewLogin(context, LoginUtil.CreateNewLogin());
+           addNewLogin(context, LoginUtil.CreateNewLogin());
 
         }
 

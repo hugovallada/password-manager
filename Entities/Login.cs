@@ -1,5 +1,6 @@
 using System.Security.Cryptography;
 using System.Web;
+using password_manager.Utils;
 
 namespace password_manager.Entities
 {
@@ -17,7 +18,7 @@ namespace password_manager.Entities
         
         public void GeneratePassword(int length)
         {
-            var valid = "abcdefghijklmnopqrstuvxyzw0123456789!@#$%*()";
+            var valid = SecurityUtil.DefineSecurity();
 
             var password = "";
             using(var provider = new RNGCryptoServiceProvider())
@@ -31,7 +32,6 @@ namespace password_manager.Entities
                     if(valid.Contains(character)) password += character;
                 }
             }
-            
             this.Password = password;
         }
     }
