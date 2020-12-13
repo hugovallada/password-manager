@@ -1,6 +1,7 @@
 ﻿using System;
 using password_manager.Data;
 using password_manager.Entities;
+using password_manager.Utils;
 
 namespace password_manager
 {
@@ -12,15 +13,8 @@ namespace password_manager
 
             var context = new DataContext();
 
-            var log = new Login();
-            log.UserName = "valladahugo@gmail.com";
-            log.GeneratePassword(64);
-            log.ConnectionName = "udemy";
-            log.Url = "www.udemy.com.br";
+           //addNewLogin(context, LoginUtil.CreateNewLogin());
 
-            Console.WriteLine($"Username: {log.UserName}\nPassword: {log.Password}");
-
-            addNewLogin(context, log);
         }
 
         static async void addNewLogin(DataContext context, Login login)
