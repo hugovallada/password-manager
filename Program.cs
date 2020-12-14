@@ -11,9 +11,17 @@ namespace password_manager
         {
             Console.WriteLine("Welcome to the Password Manager!!! Version: 1.0");
 
-            var context = new DataContext();
+            try
+            {
+                var context = new DataContext();
+                Menu();
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine($"An error has ocurred: {exception}");
+                Menu();
+            }
 
-           addNewLogin(context, LoginUtil.CreateNewLogin());
 
         }
 
@@ -22,6 +30,22 @@ namespace password_manager
             context.Logins.Add(login);
             await context.SaveChangesAsync();
             Console.WriteLine("Novo login salvo no banco");
+        }
+
+        static void Menu()
+        {
+            try
+            {
+                Console.WriteLine("What do you want to do?\n1 - List all logins\n2 - Search for the password for a given login\n3 - Exit the application");
+                var opt = Console.ReadLine();
+
+                Console.WriteLine(opt);
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine($"An error has ocurred: {exception}");
+                Menu();
+            }
         }
     }
 }
