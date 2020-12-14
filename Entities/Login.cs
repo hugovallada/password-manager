@@ -34,5 +34,10 @@ namespace password_manager.Entities
             }
             this.Password = password;
         }
+
+        public override string ToString()
+        {
+            return $"Connection Name: {this.ConnectionName}\nUrl: {this.Url}\nLogin: {this.UserName}\nPassword: {this.Password}";
+        }
     }
 }
