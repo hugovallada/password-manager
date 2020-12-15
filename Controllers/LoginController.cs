@@ -8,19 +8,19 @@ namespace password_manager.Controllers
 {
     public class LoginController
     {
-        public DataContext context { get; set; }
+        private DataContext _context { get; set; }
 
         public LoginController(DataContext context)
         {
-            this.context = context;
+            this._context = context;
         }
 
         public async void AddNewLogin(Login login)
         {
             try
             {
-                this.context.Logins.Add(login);
-                await this.context.SaveChangesAsync();
+                this._context.Logins.Add(login);
+                await this._context.SaveChangesAsync();
                 Console.WriteLine($"New login: {login.UserName} saved on the database");
             }
             catch (Exception error)
@@ -34,7 +34,7 @@ namespace password_manager.Controllers
         {
             var logins = new List<Login>();
 
-            logins = context.Logins.ToList();
+            logins = _context.Logins.ToList();
 
             return logins;
         }
@@ -43,7 +43,7 @@ namespace password_manager.Controllers
         {
             try
             {
-                var login = context.Logins.Where(login => login.ConnectionName == connName).First();
+                var login = _context.Logins.Where(login => login.ConnectionName == connName).First();
                 return login;
             }
             catch (Exception error)
@@ -52,6 +52,8 @@ namespace password_manager.Controllers
                 throw new Exception("Can't find the user");
             }
         }
+
+        
 
 
 

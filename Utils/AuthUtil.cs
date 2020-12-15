@@ -1,31 +1,44 @@
 using System;
+using password_manager.Controllers;
 using password_manager.Entities;
 
 namespace password_manager.Utils
 {
     public class AuthUtil
     {
-        public static Auth CreateAuth(string username, string password)
+        public static Auth CreateAuth(AuthController controller)
         {
-            var auth = new Auth 
+            Console.WriteLine("What's the username?");
+            var username = Console.ReadLine();
+
+            Console.WriteLine("What's the password ?");
+            var password = Console.ReadLine();
+
+            var auth = new Auth
             {
                 UserName = username,
                 Password = SecurityUtil.GenerateHash(password)
             };
 
+            controller.AddNewAuth(auth);
+
             return auth;
         }
 
-        public static bool CheckIfAuth(string username, string password)
+        public static bool CheckIfAuth(AuthController controller)
         {
-            if(username == "hugovallada" && SecurityUtil.GenerateHash(password) == "$V7%C3IJ3EJ%I#%!IJ$EE#wJvE%C3I$3EzEw!I$JDF#w97vE&*EwE")
-            {
-                Console.WriteLine("Logado");
-                return true;
-            }
+            Console.WriteLine("What's your username? ");
+            var username = Console.ReadLine();
 
-            Console.WriteLine("Não logado");
+            Console.WriteLine("What's your password ?");
+            var password = Console.ReadLine();
+
+            var auth = controller.FindAuth(username);
+
+            if (username == auth.UserName && SecurityUtil.GenerateHash(password) == auth.Password) return true;
+
             return false;
+            
         }
     }
 }

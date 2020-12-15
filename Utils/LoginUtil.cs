@@ -54,10 +54,17 @@ namespace password_manager.Utils
             }
         }
 
-        private static void ShowLogin(Login login)
+        private static void ShowLogin(Login login, AuthController authController = null)
         {
             Console.WriteLine("How do you want display your login ?\n1 - Data on the console\n2 - Text File\n3 - Copy Password to the clipboard(NOT IMPLEMENTED YET)");
             var opt = Console.ReadLine();
+
+            if(authController != null)
+            {
+                Console.WriteLine("Please, insert your master info to display sensitive data");
+                AuthUtil.CheckIfAuth(authController);
+            }
+            
 
             if (opt == "1")
             {
@@ -86,11 +93,11 @@ namespace password_manager.Utils
             }
         }
 
-        public static void FindSpecificLogin(LoginController controller)
+        public static void FindSpecificLogin(LoginController controller, AuthController authController)
         {
             Console.WriteLine("What's the connection name ?");
             var connName = Console.ReadLine();
-            ShowLogin(controller.FindUserByConnName(connName));
+            ShowLogin(controller.FindUserByConnName(connName), authController);
         }
     }
 }

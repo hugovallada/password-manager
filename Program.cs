@@ -10,6 +10,8 @@ namespace password_manager
     {
         static DataContext context = new DataContext();
         static LoginController controller = new LoginController(context);
+
+        static AuthController authController = new AuthController(context);
         static void Main(string[] args)
         {
             Console.WriteLine("Welcome to the Password Manager!!! Version: 1.0");
@@ -53,7 +55,7 @@ namespace password_manager
                 }
                 else if (option == "2")
                 {
-                    LoginUtil.FindSpecificLogin(controller);
+                    LoginUtil.FindSpecificLogin(controller, authController);
                 }
                 else if (option == "3")
                 {
@@ -61,8 +63,7 @@ namespace password_manager
                 }
                 else if (option == "4")
                 {
-                    Console.WriteLine("Thanks for using the app!!!");
-                    Console.WriteLine(AuthUtil.CheckIfAuth("hugovallada","OlaMundo"));
+                    Console.WriteLine("Thanks for using the app");
                 }
                 else
                 {
@@ -71,7 +72,7 @@ namespace password_manager
             }
             catch (Exception exception)
             {
-                Console.WriteLine($"An error has ocurred {exception.Message}");
+                Console.WriteLine("Sorry, an error has ocurred");
                 Menu();
             }
 
