@@ -24,22 +24,13 @@ namespace password_manager
                 Console.WriteLine($"An error has ocurred: {exception}");
                 Menu();
             }
-
-
-        }
-
-        static async void addNewLogin(DataContext context, Login login)
-        {
-            context.Logins.Add(login);
-            await context.SaveChangesAsync();
-            Console.WriteLine("Novo login salvo no banco");
         }
 
         static void Menu()
         {
             try
             {
-                Console.WriteLine("What do you want to do?\n1 - List all logins\n2 - Search for the password for a given login\n3 - Exit the application");
+                Console.WriteLine("What do you want to do?\n1 - List all logins\n2 - Search for the password for a given login\n3 - Exit the application\n4 - Exit");
                 var opt = Console.ReadLine();
 
                 MenuOption(opt);
@@ -60,13 +51,21 @@ namespace password_manager
                 {
                     LoginUtil.ListAllLogins(controller);
                 }
-                else if(option == "2")
+                else if (option == "2")
                 {
-                    // Buscar login por nome
+                    LoginUtil.FindSpecificLogin(controller);
                 }
-                else if(option == "3")
+                else if (option == "3")
                 {
-                   LoginUtil.CreateNewLogin(controller);
+                    LoginUtil.CreateNewLogin(controller);
+                }
+                else if (option == "4")
+                {
+                    Console.WriteLine("Thanks for using the app!!!");
+                }
+                else
+                {
+                    Menu();
                 }
             }
             catch (Exception exception)

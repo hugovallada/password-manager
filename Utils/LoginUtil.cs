@@ -2,6 +2,7 @@ using System.Diagnostics;
 using System;
 using password_manager.Controllers;
 using password_manager.Entities;
+using System.Linq;
 
 namespace password_manager.Utils
 {
@@ -55,13 +56,15 @@ namespace password_manager.Utils
 
         private static void ShowLogin(Login login)
         {
-            Console.WriteLine("How do you want display your login ?\n1 - Data on the console\n2 - Text File\n3 - Copy Password to the clipboard");
+            Console.WriteLine("How do you want display your login ?\n1 - Data on the console\n2 - Text File\n3 - Copy Password to the clipboard(NOT IMPLEMENTED YET)");
             var opt = Console.ReadLine();
 
             if (opt == "1")
             {
+                Console.WriteLine();
                 Console.WriteLine(login);
             }
+            // TODO: Create a file, open on gedit and then delete
             else if (opt == "2")
             {
                 // show in text file
@@ -80,10 +83,14 @@ namespace password_manager.Utils
 
                 process.Start();
                 process.WaitForExit();
-
-                
-
             }
+        }
+
+        public static void FindSpecificLogin(LoginController controller)
+        {
+            Console.WriteLine("What's the connection name ?");
+            var connName = Console.ReadLine();
+            ShowLogin(controller.FindUserByConnName(connName));
         }
     }
 }
