@@ -50,7 +50,7 @@ namespace password_manager.Utils
             return GetSecurityString((HashOptionsUtil) int.Parse(optSecurity));
         }
 
-        public static string GenerateHash(string password)
+        private static string SecurityHash(string password)
         {
             var securityHash = new List<string>()
             {
@@ -63,7 +63,6 @@ namespace password_manager.Utils
 
             var hash = new StringBuilder();
 
-            //TODO: Put this in a function, and create a begin and end string to be hashed and joined with the hashed password
             foreach(var character in password)
             {
                 var counter = 0;
@@ -78,7 +77,20 @@ namespace password_manager.Utils
                 hash.Append(counter > 40 ? securityHash[counter-20] : securityHash[counter+20]);
             }
 
+
             return hash.ToString();
+        }
+
+        public static string GenerateHash(string password)
+        {
+            var startSaltyPassword = "sAlTYh45H15T4RtP45sWord";
+            var endSaltyPassword = "5a1tYH4sh1EnDP4S5w0rD";
+
+            var startHash = SecurityHash(startSaltyPassword);
+            var endHash = SecurityHash(endSaltyPassword);
+            var hashPassword= SecurityHash(password);
+
+            return $"{startHash}{endHash}{hashPassword}";
         }
     }
 }
