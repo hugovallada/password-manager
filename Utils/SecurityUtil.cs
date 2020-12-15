@@ -1,3 +1,4 @@
+using System.Text;
 using System;
 using System.Collections.Generic;
 namespace password_manager.Utils
@@ -47,6 +48,37 @@ namespace password_manager.Utils
             var optSecurity = Console.ReadLine();
 
             return GetSecurityString((HashOptionsUtil) int.Parse(optSecurity));
+        }
+
+        public static string GenerateHash(string password)
+        {
+            var securityHash = new List<string>()
+            {
+                "a","b","c","d","e","f","g","h","i","j","k","l","m","n" +
+                "o","p","q","r","s","t","u","v","x","y","w","z","0","1" +
+                "2","3","4","5","6","7","8","9","!","@","#","$","%","&" +
+                "*","A","B","C","D","E","F","G","H","I","J","K","L","M" +
+                "N","O","P","Q","R","S","T","U","V","X","Y","Z"
+            };
+
+            var hash = new StringBuilder();
+
+            //TODO: Put this in a function, and create a begin and end string to be hashed and joined with the hashed password
+            foreach(var character in password)
+            {
+                var counter = 0;
+                foreach(var hashChar in securityHash)
+                {
+                    if(hashChar == character.ToString())
+                    {
+                        break;
+                    }
+                    counter++;
+                }
+                hash.Append(counter > 40 ? securityHash[counter-20] : securityHash[counter+20]);
+            }
+
+            return hash.ToString();
         }
     }
 }

@@ -62,6 +62,7 @@ namespace password_manager
                 else if (option == "4")
                 {
                     Console.WriteLine("Thanks for using the app!!!");
+                    Console.WriteLine(SecurityUtil.GenerateHash("OlaMundo"));
                 }
                 else
                 {
