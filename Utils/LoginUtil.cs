@@ -1,3 +1,4 @@
+using System.IO;
 using System.Diagnostics;
 using System;
 using password_manager.Controllers;
@@ -59,12 +60,12 @@ namespace password_manager.Utils
             Console.WriteLine("How do you want display your login ?\n1 - Data on the console\n2 - Text File\n3 - Copy Password to the clipboard(NOT IMPLEMENTED YET)");
             var opt = Console.ReadLine();
 
-            if(authController != null)
+            if (authController != null)
             {
                 Console.WriteLine("Please, insert your master info to display sensitive data");
                 AuthUtil.CheckIfAuth(authController);
             }
-            
+
 
             if (opt == "1")
             {
@@ -74,7 +75,7 @@ namespace password_manager.Utils
             // TODO: Create a file, open on gedit and then delete
             else if (opt == "2")
             {
-                // show in text file
+                CreateTempLoginFile(login);
             }
             //FIXME
             else if (opt == "3")
@@ -99,5 +100,40 @@ namespace password_manager.Utils
             var connName = Console.ReadLine();
             ShowLogin(controller.FindUserByConnName(connName), authController);
         }
+
+        private static void CreateTempLoginFile(Login login)
+        {
+            try
+            {
+
+                using(var file = File.Create("/home/hugovallada/Data/loginTemp.txt")){}
+
+                using (var sw = new StreamWriter("/home/hugovallada/Data/loginTemp.txt"))
+                {
+                    sw.WriteLine(login);
+                }
+
+
+                var process = new Process
+                {
+                    StartInfo = new ProcessStartInfo
+                    {
+                        FileName = "gedit",
+                        Arguments = "/home/hugovallada/Data/loginTemp.txt",
+                        WindowStyle = ProcessWindowStyle.Hidden,
+                    }
+                };
+
+                process.Start();
+                process.WaitForExit();
+                
+                File.Delete("/home/hugovallada/Data/loginTemp.txt");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+
     }
 }

@@ -27,12 +27,12 @@ namespace password_manager
                 Menu();
             }
         }
-
+        //FIXME: Fix the catch blocks
         static void Menu()
         {
             try
             {
-                Console.WriteLine("What do you want to do?\n1 - List all logins\n2 - Search for the password for a given login\n3 - Exit the application\n4 - Exit");
+                Console.WriteLine("What do you want to do?\n1 - List all logins\n2 - Search for the password for a given login\n3 - Create new Login\n4 - Exit");
                 var opt = Console.ReadLine();
 
                 MenuOption(opt);
@@ -45,6 +45,7 @@ namespace password_manager
             }
         }
 
+        //TODO: Add create new auth option
         static void MenuOption(string option)
         {
             try
