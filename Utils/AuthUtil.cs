@@ -1,6 +1,7 @@
 using System;
 using password_manager.Controllers;
 using password_manager.Entities;
+using password_manager.Errors;
 
 namespace password_manager.Utils
 {
@@ -25,7 +26,7 @@ namespace password_manager.Utils
             return auth;
         }
 
-        public static bool CheckIfAuth(AuthController controller)
+        public static void CheckIfAuth(AuthController controller)
         {
             Console.WriteLine("What's your username? ");
             var username = Console.ReadLine();
@@ -35,9 +36,11 @@ namespace password_manager.Utils
 
             var auth = controller.FindAuth(username);
 
-            if (username == auth.UserName && SecurityUtil.GenerateHash(password) == auth.Password) return true;
+            if(auth == null) throw new AuthException("Authentication Failed");
 
-            return false;
+            if (username == auth.UserName && SecurityUtil.GenerateHash(password) == auth.Password) return;
+
+            throw new AuthException("Authentication Failed");
             
         }
     }

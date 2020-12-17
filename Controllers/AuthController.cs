@@ -45,7 +45,7 @@ namespace password_manager.Controllers
 
         public Auth FindAuth(string username)
         {
-            var auth = _context.Auths.Where(auth => auth.UserName == username).First();
+            var auth = _context.Auths.Where(auth => auth.UserName == username).FirstOrDefault();
             return auth;
         }
 

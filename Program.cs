@@ -3,6 +3,7 @@ using password_manager.Controllers;
 using password_manager.Data;
 using password_manager.Entities;
 using password_manager.Utils;
+using System.Linq;
 
 namespace password_manager
 {
@@ -18,34 +19,43 @@ namespace password_manager
 
             try
             {
+                if (!context.Auths.Any())
+                {
+                    Console.WriteLine("Please, create a new auth account");
+                    AuthUtil.CreateAuth(authController);
+                }
                 //var context = new DataContext();
                 Menu();
             }
             catch (Exception exception)
             {
-                Console.WriteLine($"An error has ocurred: {exception}");
+                Console.WriteLine($"An error has ocurred: {exception.Message}");
                 Menu();
             }
         }
-        //FIXME: Fix the catch blocks
         static void Menu()
         {
             try
             {
-                Console.WriteLine("What do you want to do?\n1 - List all logins\n2 - Search for the password for a given login\n3 - Create new Login\n4 - Exit");
+                Console.WriteLine(
+                    "What do you want to do?\n" +
+                    "1 - List all logins\n" +
+                    "2 - Search for the password for a given login\n" +
+                    "3 - Create new Login\n" +
+                    "4 - Create new Auth! Be careful with this option\n" +
+                    "5 - Exit the application"
+                    );
                 var opt = Console.ReadLine();
 
                 MenuOption(opt);
-
             }
             catch (Exception exception)
             {
-                Console.WriteLine($"An error has ocurred: {exception}");
+                Console.WriteLine($"An error has ocurred: {exception.Message}");
                 Menu();
             }
         }
 
-        //TODO: Add create new auth option
         static void MenuOption(string option)
         {
             try
@@ -64,7 +74,13 @@ namespace password_manager
                 }
                 else if (option == "4")
                 {
-                    Console.WriteLine("Thanks for using the app");
+                    Console.WriteLine("Be careful, the new auth, will be able to see all the passwords!!!");
+                    AuthUtil.CheckIfAuth(authController);
+                    AuthUtil.CreateAuth(authController);
+                }
+                else if (option == "5")
+                {
+                    Console.WriteLine("Thanks for use the app!!!");
                 }
                 else
                 {
@@ -73,12 +89,10 @@ namespace password_manager
             }
             catch (Exception exception)
             {
-                Console.WriteLine("Sorry, an error has ocurred");
+                Console.WriteLine($"Sorry, an error has ocurred: {exception.Message}");
                 Menu();
             }
 
         }
-
-
     }
 }
